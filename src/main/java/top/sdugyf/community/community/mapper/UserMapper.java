@@ -11,7 +11,7 @@ import top.sdugyf.community.community.model.User;
 @Mapper
 @Component(value = "userMapper")
 public interface  UserMapper {
-    @Insert("insert into user (name, account_id, token, gmt_create, gmt_modified) values (#{name},#{accountId},#{token},#{gmtCreat},#{gmtModified})")
+    @Insert("insert into user (name, account_id, token, gmt_create, gmt_modified, avatar_url) values (#{name},#{accountId},#{token},#{gmtCreat},#{gmtModified},#{avatarUrl})")
     void  insert(User user);
 
     @Select("select * from user where token = #{token}")

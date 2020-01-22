@@ -29,6 +29,9 @@
             </form>
             <ul class="nav navbar-nav navbar-right">
 <!--                <div th:text="${session.user}"></div>-->
+                <li th:if="not ${session.user!=null}">
+                    <a href="/publish">发布</a>
+                </li>
                 <li class="dropdown" th:if="${session.user != null}">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" th:text="${session.user.getName()}"><span class="caret"></span></a>
                     <ul class="dropdown-menu">
@@ -55,22 +58,22 @@
             <form action="/publish" method="post">
                 <div class="form-group">
                     <label for="tiitle">问题标题(简单扼要):</label>
-                    <input type="email" class="form-control" id="tiitle" name="title" placeholder="问题标题...">
+                    <input class="form-control" id="tiitle" name="title" placeholder="问题标题..." th:value="${title}">
                 </div>
 
                 <div class="form-group">
                     <label for="tiitle">问题描述(必填,请参照右侧或下侧提示):</label>
-                    <textarea name="description" id="description" cols="30" rows="10" class="form-control"></textarea>
+                    <textarea name="description" id="description" cols="30" rows="10" class="form-control" th:value="${description}"></textarea>
                 </div>
                 <div class="form-group">
                     <label for="tiitle">添加标签:</label>
-                    <input type="email" class="form-control" id="tag" name="tag" placeholder="输入标签,以逗号分隔">
+                    <input class="form-control" id="tag" name="tag" placeholder="输入标签,以逗号分隔" th:value="${tag}">
                 </div>
                 <div class="container-fluid main">
                     <div class="row">
 
                         <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
-                            <div class="alert alert-danger col-lg-12 col-md-12 col-sm-12 col-xs-12" th:text="${error}">
+                            <div class="alert alert-danger col-lg-12 col-md-12 col-sm-12 col-xs-12" th:text="${error}" th:if="${error != null}">
 <!--                                <span ></span>-->
                             </div>
                         </div>
