@@ -2,6 +2,7 @@
     margin: 30px;
     background-color: white;
 }
+
 body {
     background-color: #efefef;
 }
@@ -9,4 +10,16 @@ body {
 .btn-success {
     margin: 15px;
     float: right;
+}
+.media-object{
+    height: 40px;
+    width: 40px;
+
+}
+
+.text-desc{
+    font-size: 12px;
+    font-weight: normal;
+    color: #999;
+
 }
