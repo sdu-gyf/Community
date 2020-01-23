@@ -8,20 +8,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import top.sdugyf.community.community.dto.PaginationDTO;
-import top.sdugyf.community.community.dto.QuestionDTO;
-import top.sdugyf.community.community.mapper.UserMapper;
 import top.sdugyf.community.community.model.User;
 import top.sdugyf.community.community.service.QuestionService;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
 public class ProfileController {
 
 
-    @Autowired
-    private UserMapper userMapper;
+
 
     @Autowired
     private QuestionService questionService;
@@ -36,20 +32,7 @@ public class ProfileController {
 
 
 
-        User user=null;
-        Cookie[] cookies = request.getCookies();
-        if (cookies!=null&&cookies.length !=0) {
-            for (Cookie cookie : cookies) {
-                if(cookie.getName().equals("token")){
-                    String token = cookie.getValue();
-                    user = userMapper.findByToken(token);
-                    if(user!=null) {
-                        request.getSession().setAttribute("user", user);
-                    }
-                    break;
-                }
-            }
-        }
+        User user = (User) request.getSession().getAttribute("user");
 
         if(user==null) {
             return "redirect:/";
