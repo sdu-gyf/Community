@@ -33,7 +33,7 @@
                     <h4 class="media-heading" th:text="${question.title}"></h4>
                     <span th:text="${question.description}"></span><br>
                     <span class="text-desc"><span th:text="${question.commentCount}"></span> 个回复 • <span th:text="${question.viewCount}"></span> 次浏览 • <span th:text="${#dates.format(question.gmtCreate, 'yyyy-MM-dd HH:mm')}"></span></span>
-
+                    <hr>
                 </div>
             </div>
 
@@ -62,7 +62,7 @@
                     </li>
 
                     <li th:if="${pagination.showEndPage}">
-                        <a th:href="@{/page=(${pagination.totalPage})}" aria-label="Next">
+                        <a th:href="@{/(page=${pagination.totalPage})}" aria-label="Next">
                             <span aria-hidden="true">&gt;&gt;</span>
                         </a>
                     </li>
