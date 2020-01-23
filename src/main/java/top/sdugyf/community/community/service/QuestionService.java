@@ -37,9 +37,6 @@ public class QuestionService {
         }
 
 
-
-
-
         if(page<1){
             page=1;
         }
@@ -77,10 +74,6 @@ public class QuestionService {
             totalPage = totalCount/size +1;
         }
 
-
-
-
-
         if(page<1){
             page=1;
         }
@@ -116,5 +109,17 @@ public class QuestionService {
         questionDTO.setUser(user);
 
         return questionDTO;
+    }
+
+    public void createOrUpdate(Question question) {
+        if(question.getId() == null) {
+
+            question.setGmtCreate(System.currentTimeMillis());
+            question.setGmtModified(question.getGmtCreate());
+            questionMapper.create(question);
+        } else {
+            question.setGmtModified(System.currentTimeMillis());
+            questionMapper.update(question);
+        }
     }
 }
