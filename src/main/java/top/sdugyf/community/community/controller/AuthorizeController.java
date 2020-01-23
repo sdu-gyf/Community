@@ -10,6 +10,7 @@ import top.sdugyf.community.community.dto.GithubUser;
 import top.sdugyf.community.community.mapper.UserMapper;
 import top.sdugyf.community.community.model.User;
 import top.sdugyf.community.community.provider.GithubProvider;
+import top.sdugyf.community.community.service.UserService;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -24,6 +25,9 @@ public class AuthorizeController {
 
     @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    private UserService userService;
 
 
     @Value("${github.client_id}")
@@ -57,9 +61,7 @@ public class AuthorizeController {
             user.setName(githubUser.getLogin());
             user.setAvatarUrl(githubUser.getAvatar_url());
             user.setAccountId(String.valueOf(githubUser.getId()));
-            user.setGmtCreate(System.currentTimeMillis());
-            user.setGmtModified(user.getGmtCreate());
-            userMapper.insert(user);
+            userService.CreateOrUpdate(user);
             response.addCookie(new Cookie("token", token));
             return "redirect:/";
         }else{
@@ -67,5 +69,14 @@ public class AuthorizeController {
             return "redirect:/";
         }
 
+    }
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request,
+                         HttpServletResponse response) {
+        request.getSession().removeAttribute("user");
+        Cookie cookie = new Cookie("token",null);
+        cookie.setMaxAge(0);
+        response.addCookie(cookie);
+        return "redirect:/";
     }
 }
