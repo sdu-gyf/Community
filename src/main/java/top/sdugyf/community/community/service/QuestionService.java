@@ -9,6 +9,7 @@ import top.sdugyf.community.community.dto.PaginationDTO;
 import top.sdugyf.community.community.dto.QuestionDTO;
 import top.sdugyf.community.community.exception.CustomizeErrorCode;
 import top.sdugyf.community.community.exception.CustomizeException;
+import top.sdugyf.community.community.mapper.QuestionExtMapper;
 import top.sdugyf.community.community.mapper.QuestionMapper;
 import top.sdugyf.community.community.mapper.UserMapper;
 import top.sdugyf.community.community.model.Question;
@@ -26,6 +27,9 @@ public class QuestionService {
     private QuestionMapper questionMapper;
     @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    private QuestionExtMapper questionExtMapper;
 
     public PaginationDTO list(Integer page, Integer size) {
 
@@ -130,6 +134,9 @@ public class QuestionService {
 
             question.setGmtCreate(System.currentTimeMillis());
             question.setGmtModified(question.getGmtCreate());
+            question.setLikeCount(0);
+            question.setCommentCount(0);
+            question.setViewCount(0);
             questionMapper.insert(question);
         } else {
             Question updateQuestion = new Question();
@@ -148,13 +155,9 @@ public class QuestionService {
     }
 
     public void incView(Integer id) {
-
-        Question question = questionMapper.selectByPrimaryKey(id);
-        Question updateQuestion = new Question();
-        updateQuestion.setViewCount(question.getViewCount()+1);
-        QuestionExample example = new QuestionExample();
-        example.createCriteria()
-                .andIdEqualTo(id);
-        questionMapper.updateByExampleSelective(updateQuestion, example);
+        Question question = new Question();
+        question.setId(id);
+        question.setViewCount(1);
+        questionExtMapper.incView(question);
     }
 }
