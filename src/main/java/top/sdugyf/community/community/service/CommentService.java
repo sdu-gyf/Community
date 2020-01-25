@@ -3,6 +3,7 @@ package top.sdugyf.community.community.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import top.sdugyf.community.community.enums.CommentTypeEnum;
 import top.sdugyf.community.community.exception.CustomizeErrorCode;
 import top.sdugyf.community.community.exception.CustomizeException;
@@ -24,6 +25,7 @@ public class CommentService {
     @Autowired
     private QuestionMapper questionMapper;
 
+    @Transactional
     public void insert(Comment comment) {
         if(comment.getParentId() == null || comment.getParentId() == 0){
             throw new CustomizeException(CustomizeErrorCode.TARGET_PARAM_NOT_FOUND);
