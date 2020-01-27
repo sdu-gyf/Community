@@ -9,16 +9,12 @@ import top.sdugyf.community.community.dto.CommentDTO;
 import top.sdugyf.community.community.enums.CommentTypeEnum;
 import top.sdugyf.community.community.exception.CustomizeErrorCode;
 import top.sdugyf.community.community.exception.CustomizeException;
-import top.sdugyf.community.community.mapper.CommentMapper;
-import top.sdugyf.community.community.mapper.QuestionExtMapper;
-import top.sdugyf.community.community.mapper.QuestionMapper;
-import top.sdugyf.community.community.mapper.UserMapper;
+import top.sdugyf.community.community.mapper.*;
 import top.sdugyf.community.community.model.*;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -36,6 +32,9 @@ public class CommentService {
     @Autowired
     private UserMapper userMapper;
 
+    @Autowired
+    private CommentExtMapper commentExtMapper;
+
     @Transactional
     public void insert(Comment comment) {
         if(comment.getParentId() == null || comment.getParentId() == 0){
@@ -52,6 +51,11 @@ public class CommentService {
                 throw new CustomizeException(CustomizeErrorCode.COMMENT_NOT_FOUND);
             }
             commentMapper.insert(comment);
+
+            Comment parentComment = new Comment();
+            parentComment.setId(comment.getParentId());
+            parentComment.setCommentCount(1);
+            commentExtMapper.incCommentCount(parentComment);
         } else {
 
             Question question = questionMapper.selectByPrimaryKey(comment.getParentId());
@@ -64,11 +68,11 @@ public class CommentService {
         }
     }
 
-    public List<CommentDTO> listByQuestionId(Long id) {
+    public List<CommentDTO> listByTargetId(Long id, CommentTypeEnum type) {
         CommentExample commentExample = new CommentExample();
         commentExample.createCriteria()
                 .andParentIdEqualTo(id)
-                .andTypeEqualTo(CommentTypeEnum.QUESTION.getType());
+                .andTypeEqualTo(type.getType());
         commentExample.setOrderByClause("gmt_create desc");
         List<Comment> comments = commentMapper.selectByExample(commentExample);
         if(comments.size()==0){
@@ -88,7 +92,6 @@ public class CommentService {
             commentDTO.setUser(userMap.get(comment.getCommentator()));
             return commentDTO;
         }).collect(Collectors.toList());
-
         return commentDTOS;
     }
 }

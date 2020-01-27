@@ -11,6 +11,7 @@
     <script src="/js/jquery-3.4.1.min.js" type="application/javascript"></script>
     <script src="/js/bootstrap.min.js" type="application/javascript"></script>
     <script src="/js/community.js" type="application/javascript"></script>
+    <script src="/js/moment.js" type="application/javascript"></script>
 
 </head>
 <body>
@@ -53,15 +54,30 @@
                                     <img class="media-object img-rounded" th:src="${comment.user.avatarUrl}">
                                 </a>
                             </div>
-                            <div class="media-body comment-adjust">
+                            <div class="media-body comment-adjust" th:id="${'comment-body-'+comment.id}">
                                 <h5 class="media-heading">
                                     <span th:text="${comment.user.name}"></span>
                                 </h5>
                                 <div th:text="${comment.content}"></div>
                                 <div class="menu">
                                     <span class="glyphicon glyphicon-thumbs-up icon"></span>
-                                    <span class="glyphicon glyphicon-comment icon"></span>
+                                    <span th:data-id="${comment.id}" onclick="collapseComments(this)" class="comment-icon">
+                                        <span class="glyphicon glyphicon-comment" ></span>
+                                        <span th:text="${comment.commentCount}" class="comment-count"></span>
+                                    </span>
+
                                     <span class="pull-right" th:text="${#dates.format(comment.gmtCreate, 'yyyy-MM-dd HH:mm')}"></span>
+                                </div>
+
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 collapse sub-comments"
+                                     th:id="${'comment-'+comment.id}">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <input type="text" class="form-control" placeholder="评论一下……"
+                                               th:id="${'input-'+comment.id}">
+                                        <button type="button" class="btn btn-success pull-right" onclick="comment(this)"
+                                                th:data-id="${comment.id}">评论
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>

@@ -43,6 +43,14 @@ body {
     margin: 10px 0;
 }
 
+.sub-comments {
+    border-radius: 10px;
+    margin-top: 10px;
+    border: 1px solid #eeeeee;
+    padding-top: 15px;
+    margin-bottom: 15px;
+}
+
 .btn-comment {
     float: right;
     margin-bottom: 20px;
@@ -62,6 +70,10 @@ body {
     cursor: pointer;
 }
 
+.menu .active {
+    color: #499ef3;
+}
+
 .menu .icon:hover {
     color: #499ef3;
 }
@@ -69,6 +81,21 @@ body {
 .comment-adjust {
     padding-top: 0;
 }
+
+.menu .comment-icon {
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.menu .comment-count {
+    padding-top: 0;
+    font-size: 18px;
+}
+
+.menu .comment-icon:hover {
+    color: #499ef3;
+}
+
 
 .comments {
     margin-bottom: 15px;
