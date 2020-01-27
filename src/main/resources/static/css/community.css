@@ -31,6 +31,8 @@ body {
 .community-menu {
     color: #999;
     font-size: 13px;
+    margin-bottom: 15px;
+    display: block;
 }
 
 .media-body{
@@ -66,4 +68,10 @@ body {
 
 .comment-adjust {
     padding-top: 0;
+}
+
+.comments {
+    margin-bottom: 15px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #eee;
 }
