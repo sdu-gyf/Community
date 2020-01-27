@@ -13,9 +13,18 @@ function post() {
             if(response.code==200) {
                 $("#comment_section").hide();
             } else {
-                alert(response.message);
+                if(response.code==2003) {
+                    var isAccepted = confirm(response.message);
+                    console.log(isAccepted);
+                    if(isAccepted) {
+                        console.log(isAccepted);
+                        window.open("https://github.com/login/oauth/authorize?client_id=e38f3becbee9528b853a&redirect_uri=http://localhost:8888/callback&scope=user&state=1");
+                        window.localStorage.setItem("closable", true);
+                    }
+                }else {
+                    alert(response.message);
+                }
             }
-            console.log(response)
         },
         dataType:"json",
         contentType:'application/json'
