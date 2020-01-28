@@ -29,8 +29,6 @@ public class NotificationService {
     @Autowired
     private NotificationMapper notificationMapper;
 
-    @Autowired
-    private UserMapper userMapper;
 
     public PaginationDTO list(Long userId, Integer page, Integer size) {
         PaginationDTO paginationDTO = new PaginationDTO<>();
@@ -60,6 +58,7 @@ public class NotificationService {
         NotificationExample example = new NotificationExample();
         example.createCriteria()
                 .andReceiverEqualTo(userId);
+        example.setOrderByClause("gmt_create desc");
         List<Notification> notifications = notificationMapper.selectByExampleWithRowbounds(example, new RowBounds(offset, size));
 
         if(notifications.size()==0){

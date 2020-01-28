@@ -69,7 +69,7 @@
                             </li>
 
                             <li th:each="page : ${pagination.pages}"  th:class="${pagination.page==page}? 'active' : ''">
-                                <a th:href="@{'/profile/'+${section}(page=${pagination.page})}" th:text="${page}"></a>
+                                <a th:href="@{'/profile/'+${section}(page=${page})}" th:text="${page}"></a>
                             </li>
 
                             <li th:if="${pagination.showNext}">
@@ -97,11 +97,8 @@
                     </a>
                     <a href="/profile/replies" th:class="${section=='replies'}? 'active list-group-item': 'list-group-item'">
                         最新回复
-                        <span class="badge" th:text="${unreadCount}"></span>
+                        <span class="badge" th:text="${session.unreadMessage}"></span>
                     </a>
-                    <a href="#" class="list-group-item">Morbi leo risus</a>
-                    <a href="#" class="list-group-item">Porta ac consectetur ac</a>
-                    <a href="#" class="list-group-item">Vestibulum at eros</a>
                 </div>
             </div>
         </div>
