@@ -6,8 +6,11 @@
     <link rel="stylesheet" href="/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="/css/bootstrap-theme.min.css"/>
     <link rel="stylesheet" href="/css/community.css"/>
+    <link rel="stylesheet" href="/css/editormd.min.css"/>
     <script src="/js/jquery-3.4.1.min.js" type="application/javascript"></script>
+    <script src="https://cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
     <script src="/js/bootstrap.min.js" type="application/javascript"></script>
+    <script src="/js/editormd.min.js" type="application/javascript"></script>
 </head>
 <body>
 
@@ -22,16 +25,30 @@
             <form action="/publish" method="post">
                 <input type="hidden" name="id" th:value="${id}">
                 <div class="form-group">
-                    <label for="tiitle">问题标题(简单扼要):</label>
-                    <input class="form-control" id="tiitle" name="title" placeholder="问题标题..." th:value="${title}">
+                    <label for="title">问题标题(简单扼要):</label>
+                    <input class="form-control" id="title" name="title" placeholder="问题标题..." th:value="${title}">
                 </div>
 
-                <div class="form-group">
-                    <label for="tiitle">问题描述(必填,请参照右侧或下侧提示):</label>
-                    <textarea name="description" id="description" cols="30" rows="10" class="form-control" th:text="${description}"></textarea>
+                <div class="form-group"  id="question-editor">
+                    <label for="title">问题描述(必填,请参照右侧或下侧提示):</label>
+                    <textarea name="description" id="description" style="display:none;" cols="30" rows="10" class="form-control" th:text="${description}" ></textarea>
                 </div>
+
+                <script type="text/javascript">
+                    $(function() {
+                        var editor = editormd("question-editor", {
+                            width  : "100%",
+                            height : 350,
+                            path   : "/js/lib/",
+                            delay  : 0,
+                            watch:false,
+                            placeholder:"请输入问题描述，支持Markdown语法,支持 TeX 科学公式（基于 KaTeX）、流程图 Flowchart 和 时序图 Sequence Diagram;支持 ToC 目录（Table of Contents）、Emoji 表情、Task lists、@链接等 Markdown 扩展语法；"
+                        });
+                    });
+                </script>
+
                 <div class="form-group">
-                    <label for="tiitle">添加标签:</label>
+                    <label for="title">添加标签:</label>
                     <input class="form-control" id="tag" name="tag" placeholder="输入标签,以逗号分隔" th:value="${tag}">
                 </div>
                 <div class="container-fluid main">
