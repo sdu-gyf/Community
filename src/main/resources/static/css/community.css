@@ -102,3 +102,11 @@ body {
     padding-bottom: 5px;
     border-bottom: 1px solid #eee;
 }
+
+.tags {
+    margin-right: 10px;
+    margin-left: 0;
+}
+.tag {
+    margin-right: 0;
+}

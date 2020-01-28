@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import top.sdugyf.community.community.dto.CommentDTO;
 import top.sdugyf.community.community.enums.CommentTypeEnum;
+import top.sdugyf.community.community.enums.NotificationStatusEnum;
+import top.sdugyf.community.community.enums.NotificationTypeEnum;
 import top.sdugyf.community.community.exception.CustomizeErrorCode;
 import top.sdugyf.community.community.exception.CustomizeException;
 import top.sdugyf.community.community.mapper.*;
@@ -35,8 +37,11 @@ public class CommentService {
     @Autowired
     private CommentExtMapper commentExtMapper;
 
+    @Autowired
+    private NotificationMapper notificationMapper;
+
     @Transactional
-    public void insert(Comment comment) {
+    public void insert(Comment comment, User commentator) {
         if(comment.getParentId() == null || comment.getParentId() == 0){
             throw new CustomizeException(CustomizeErrorCode.TARGET_PARAM_NOT_FOUND);
         }
@@ -45,10 +50,15 @@ public class CommentService {
             throw new CustomizeException(CustomizeErrorCode.TYPE_PARAM_WRONG);
         }
 
-        if(comment.getType()==CommentTypeEnum.COMMENT.getType()){
+        if(comment.getType().equals(CommentTypeEnum.COMMENT.getType())){
             Comment dbComment = commentMapper.selectByPrimaryKey(comment.getParentId());
             if(dbComment==null) {
                 throw new CustomizeException(CustomizeErrorCode.COMMENT_NOT_FOUND);
+            }
+
+            Question question = questionMapper.selectByPrimaryKey(dbComment.getParentId());
+            if(question==null) {
+                throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
             }
             commentMapper.insert(comment);
 
@@ -56,16 +66,30 @@ public class CommentService {
             parentComment.setId(comment.getParentId());
             parentComment.setCommentCount(1);
             commentExtMapper.incCommentCount(parentComment);
+            createNotify(comment, dbComment.getCommentator(), commentator.getName(), dbComment.getContent(), NotificationTypeEnum.REPLY_COMMENT, question.getId());
         } else {
-
             Question question = questionMapper.selectByPrimaryKey(comment.getParentId());
             if(question==null) {
-                throw new CustomizeException(CustomizeErrorCode.COMMENT_NOT_FOUND);
+                throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
             }
             commentMapper.insert(comment);
             question.setCommentCount(1);
             questionExtMapper.incCommentCount(question);
+            createNotify(comment,question.getCreator(), commentator.getName(), question.getTitle(), NotificationTypeEnum.REPLY_QUESTION, question.getId());
         }
+    }
+
+    private void createNotify(Comment comment, Long receiver, String notifierName, String outerTitle, NotificationTypeEnum notificationEnum, Long outerid) {
+        Notification notification = new Notification();
+        notification.setGmtCreate(System.currentTimeMillis());
+        notification.setType(notificationEnum.getType());
+        notification.setOuterid(outerid);
+        notification.setNotifier(comment.getCommentator());
+        notification.setStatus(NotificationStatusEnum.UNREAD.getStatus());
+        notification.setReceiver(receiver);
+        notification.setNotifierName(notifierName);
+        notification.setOuterTitle(outerTitle);
+        notificationMapper.insert(notification);
     }
 
     public List<CommentDTO> listByTargetId(Long id, CommentTypeEnum type) {
