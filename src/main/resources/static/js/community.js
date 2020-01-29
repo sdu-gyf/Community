@@ -77,9 +77,8 @@ function collapseComments(e) {
                         "class": "media-object img-rounded",
                         "src": comment.user.avatarUrl
                     }));
-
                     var mediaBodyElement = $("<div/>", {
-                        "class": "media-body comment-adjust"
+                        "class": "media-body comment-adjust",
                     }).append($("<h5/>", {
                         "class": "media-heading",
                         "html": comment.user.name
@@ -91,15 +90,12 @@ function collapseComments(e) {
                         "class":"pull-right",
                         "html":moment(comment.gmtCreate).format("YYYY-MM-DD")
                     })));
-
                     var mediaElement = $("<div/>", {
                         "class": "media"
                     }).append(mediaLeftElement).append(mediaBodyElement);
-
                     var commentElement = $("<div/>", {
                         "class": "col-lg-12 col-md-12 col-sm-12 col-xs-12 comments"
                     }).append(mediaElement);
-
                     subCommentContainer.prepend(commentElement);
                 });
                 //展开二级评论
