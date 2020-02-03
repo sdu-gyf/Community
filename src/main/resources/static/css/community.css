@@ -110,3 +110,7 @@ body {
 .tag {
     margin-right: 0;
 }
+.footer {
+    padding: 10px 20%;
+    color: #666;
+}
