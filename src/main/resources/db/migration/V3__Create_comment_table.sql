@@ -1,13 +1,15 @@
-create table comment
+create table COMMENT
 (
-    id bigint auto_increment,
-    parent_id bigint not null,
-    type int not null,
-    commentator bigint not null,
-    gmt_create bigint not null,
-    gmt_modified bigint not null,
-    like_count bigint ,
-    content varchar(1024) not null,
-    constraint comment_pk
-    primary key (id)
+    ID            BIGINT  NOT NULL auto_increment,
+    PARENT_ID     BIGINT        not null,
+    TYPE          INTEGER       not null,
+    COMMENTATOR   BIGINT        not null,
+    GMT_CREATE    BIGINT        not null,
+    GMT_MODIFIED  BIGINT        not null,
+    LIKE_COUNT    BIGINT,
+    CONTENT       VARCHAR(1024) not null,
+    COMMENT_COUNT INTEGER default 0,
+    constraint COMMENT_PK
+        primary key (ID)
 );
+
