@@ -2,7 +2,7 @@ create table QUESTION
 (
     ID            BIGINT  NOT NULL auto_increment,
     TITLE         VARCHAR(50),
-    DESCRIPTION   CLOB,
+    DESCRIPTION   LONGTEXT,
     GMT_CREATE    BIGINT,
     GMT_MODIFIED  BIGINT,
     CREATOR       BIGINT,
