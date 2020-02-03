@@ -39,7 +39,7 @@
                         </ul>
                     </li>
                     <li th:if="not ${session.user!=null}">
-                        <a th:href="@{https://github.com/login/oauth/authorize(client_id='e38f3becbee9528b853a',redirect_uri=${#httpServletRequest.getServletContext().getAttribute('redirectUri')},scope='user',state=1)}">登录</a>
+                        <a th:href="@{https://github.com/login/oauth/authorize(client_id='e38f3becbee9528b853a',redirect_uri='http://www.sdugyf.top:8888',scope='user',state=1)}">登录</a>
                     </li>
                 </ul>
             </div><!-- /.navbar-collapse -->
