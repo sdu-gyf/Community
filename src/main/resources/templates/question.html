@@ -37,13 +37,13 @@
                     </span>
 
                    <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                   <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" class="question-view">
+                   <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="question-view">
                        <textarea style="display:none;" th:text="${question.description}"></textarea>
                    </div>
 
                    <script type="text/javascript">
                        $(function() {
-                           var testView = editormd.markdownToHTML("question-view", {});
+                           var testView = editormd.markdownToHTML("#question-view", {});
                        });
                    </script>
 
@@ -89,7 +89,7 @@
 
                                 <script type="text/javascript">
                                     $(function() {
-                                        var testView = editormd.markdownToHTML("comment-view", {});
+                                        var testView = editormd.markdownToHTML(".comment-view", {});
                                     });
                                 </script>
 
