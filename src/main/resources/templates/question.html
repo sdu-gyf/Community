@@ -37,7 +37,7 @@
                     </span>
 
                    <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                   <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="question-view">
+                   <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" class="question-view">
                        <textarea style="display:none;" th:text="${question.description}"></textarea>
                    </div>
 
@@ -83,7 +83,7 @@
                                 <h5 class="media-heading">
                                     <span th:text="${comment.user.name}"></span>
                                 </h5>
-                                <div id="comment-view">
+                                <div class="comment-view">
                                     <textarea style="display: none;" th:text="${comment.content}"></textarea>
                                 </div>
 
