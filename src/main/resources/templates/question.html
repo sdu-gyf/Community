@@ -83,13 +83,14 @@
                                 <h5 class="media-heading">
                                     <span th:text="${comment.user.name}"></span>
                                 </h5>
-                                <div class="comment-view">
+                                <div th:class="${'comment-view-'+comment.id}">
                                     <textarea style="display: none;" th:text="${comment.content}"></textarea>
                                 </div>
 
-                                <script type="text/javascript">
+                                <script th:inline="javascript">
                                     $(function() {
-                                        var testView = editormd.markdownToHTML(".comment-view", {});
+                                        var name =[[${'comment-view-'+comment.id}]];
+                                        var testView = editormd.markdownToHTML('.'+name, {});
                                     });
                                 </script>
 
@@ -149,7 +150,7 @@
                                     imageUpload:true,
                                     imageFormats:["jpg","jpeg","gif","png","bmp","webp"],
                                     imageUploadURL:"/file/upload",
-                                    placeholder:"请输入回复"
+                                    placeholder:"请输入回复，支持Markdown语法,支持 TeX 科学公式（基于 KaTeX）、流程图 Flowchart 和 时序图 Sequence Diagram;支持 ToC 目录（Table of Contents）、Emoji 表情、Task lists Markdown 扩展语法；"
                                 });
                             });
                         </script>
