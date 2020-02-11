@@ -56,6 +56,9 @@ public class QQProvider {
                 QQUser qqUser = JSON.parseObject(data, QQUser.class);
                 System.out.println("url:"+qqUser.getFigureurl_qq_1());
                 System.out.println("name:"+qqUser.getNickname());
+                System.out.println("openid1:"+openId);
+                Long open_id = Long.valueOf(openId);
+                System.out.println("open_id:"+open_id);
                 qqUser.setId(Long.valueOf(openId));
                 System.out.println("openid:"+openId);
                 System.out.println("id:"+qqUser.getId());
