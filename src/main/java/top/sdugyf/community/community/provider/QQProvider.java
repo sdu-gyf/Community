@@ -54,6 +54,8 @@ public class QQProvider {
                 String  data =  newResponse.body().string();
                 System.out.println("data:"+data);
                 QQUser qqUser = JSON.parseObject(data, QQUser.class);
+                System.out.println("url:"+qqUser.getFigureurl_qq_1());
+                System.out.println("name"+qqUser.getNickname());
                 qqUser.setId(Long.valueOf(openId));
                 return qqUser;
             } catch (IOException e) {
@@ -62,8 +64,6 @@ public class QQProvider {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
-        return new QQUser();
+        return null;
     }
 }
