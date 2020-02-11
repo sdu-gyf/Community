@@ -4,7 +4,7 @@ package top.sdugyf.community.community.dto;
 import lombok.Data;
 
 @Data
-public class AccessTokenDTO {
+public class GithubAccessTokenDTO {
     private String client_id;
     private String client_secret;
     private String code;

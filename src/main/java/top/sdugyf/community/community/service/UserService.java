@@ -22,9 +22,9 @@ public class UserService {
                 .andAccountIdEqualTo(user.getAccountId());
         List<User> users = userMapper.selectByExample(userExample);
         if(users.size() == 0) {
-            userMapper.insert(user);
             user.setGmtCreate(System.currentTimeMillis());
             user.setGmtModified(user.getGmtCreate());
+            userMapper.insert(user);
         } else {
             User dbuser = users.get(0);
             User updateUser = new User();

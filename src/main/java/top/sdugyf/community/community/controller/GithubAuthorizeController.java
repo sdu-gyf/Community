@@ -5,9 +5,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import top.sdugyf.community.community.dto.AccessTokenDTO;
+import top.sdugyf.community.community.dto.GithubAccessTokenDTO;
 import top.sdugyf.community.community.dto.GithubUser;
-import top.sdugyf.community.community.mapper.UserMapper;
 import top.sdugyf.community.community.model.User;
 import top.sdugyf.community.community.provider.GithubProvider;
 import top.sdugyf.community.community.service.UserService;
@@ -18,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.UUID;
 
 @Controller
-public class AuthorizeController {
+public class GithubAuthorizeController {
 
     @Autowired
     private GithubProvider githubProvider;
@@ -40,17 +39,17 @@ public class AuthorizeController {
     public String callback(@RequestParam(name="code") String code,
                            @RequestParam(name="state") String state,
                            HttpServletResponse response) {
-        AccessTokenDTO accessTokenDTO = new AccessTokenDTO();
-        accessTokenDTO.setClient_id(clientId);
-        accessTokenDTO.setClient_secret(clientSecret);
-        accessTokenDTO.setCode(code);
-        accessTokenDTO.setRedirect_uri(redirectUri);
-        accessTokenDTO.setState(state);
-        String accessToken = githubProvider.getAccessToken(accessTokenDTO);
+        GithubAccessTokenDTO githubAccessTokenDTO = new GithubAccessTokenDTO();
+        githubAccessTokenDTO.setClient_id(clientId);
+        githubAccessTokenDTO.setClient_secret(clientSecret);
+        githubAccessTokenDTO.setCode(code);
+        githubAccessTokenDTO.setRedirect_uri(redirectUri);
+        githubAccessTokenDTO.setState(state);
+        String accessToken = githubProvider.getAccessToken(githubAccessTokenDTO);
         GithubUser githubUser = githubProvider.getUser(accessToken);
 //        System.out.println(user.getLogin());
         if(githubUser!=null && githubUser.getId() != null){
-            // 登录成功 写cookie和seesion
+            // 登录成功 写cookie和session
             User user = new User();
             String token = UUID.randomUUID().toString();
             user.setToken(token);

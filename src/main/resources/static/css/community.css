@@ -114,3 +114,11 @@ body {
     padding: 10px 20%;
     color: #666;
 }
+
+.iconfont {
+    width: 25px;
+}
+.iconfont-qq {
+    width: 35px;
+    margin-top: -4px;
+}
