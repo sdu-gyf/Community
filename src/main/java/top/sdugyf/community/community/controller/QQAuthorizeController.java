@@ -52,13 +52,20 @@ public class QQAuthorizeController {
         qqAccessTokenDTO.setRedirect_uri(redirectUri);
         String accessToken = qqProvider.getAccessToken(qqAccessTokenDTO);
         QQUser qqUser = qqProvider.getUser(accessToken);
+        System.out.println(qqUser.getId());
         if(qqUser!=null && qqUser.getId()!=null) {
             User user = new User();
             String token = UUID.randomUUID().toString();
             user.setToken(token);
+            System.out.println("id:"+qqUser.getId());
+            System.out.println("getFigureurl_qq_1:"+qqUser.getFigureurl_qq_1());
+            System.out.println("getNickname:"+qqUser.getNickname());
             user.setName(qqUser.getNickname());
             user.setAvatarUrl(qqUser.getFigureurl_qq_1());
             user.setAccountId(String.valueOf(qqUser.getId()));
+            System.out.println("id:"+user.getName());
+            System.out.println("getFigureurl_qq_1:"+user.getAvatarUrl());
+            System.out.println("getNickname:"+user.getAccountId());
             userService.CreateOrUpdate(user);
             response.addCookie(new Cookie("token",token));
             return "redirect:/";
