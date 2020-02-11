@@ -44,7 +44,6 @@ public class QQAuthorizeController {
 
     @GetMapping("/qqcallback")
     public String qqCallback(@RequestParam(name="code") String code,
-                             @RequestParam(name="state") String state,
                              HttpServletResponse response) {
         QQAccessTokenDTO qqAccessTokenDTO = new QQAccessTokenDTO();
         qqAccessTokenDTO.setApp_id(appId);

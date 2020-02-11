@@ -24,7 +24,9 @@ public class QQProvider {
                 .build();
         try (Response response = client.newCall(request).execute()) {
             String access_token = response.body().string();
+            System.out.println("access_token:"+access_token);
             String token = access_token.split("&")[0].split("=")[1];
+            System.out.println("token:"+token);
             return token;
         } catch (IOException e) {
             e.printStackTrace();
@@ -47,7 +49,7 @@ public class QQProvider {
                     .url("https://graph.qq.com/user/get_user_info?access_token="+accessToken+"&oauth_consumer_key="+oauth_consumer_key+"&openid="+openId)
                     .build();
             try (Response newResponse = okHttpClient.newCall(newRequest).execute()) {
-                String  data =  response.body().string();
+                String  data =  newResponse.body().string();
                 QQUser qqUser = JSON.parseObject(data, QQUser.class);
                 qqUser.setId(Long.valueOf(openId));
                 return qqUser;
