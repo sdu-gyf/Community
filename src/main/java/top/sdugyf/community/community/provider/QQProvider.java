@@ -55,8 +55,10 @@ public class QQProvider {
                 System.out.println("data:"+data);
                 QQUser qqUser = JSON.parseObject(data, QQUser.class);
                 System.out.println("url:"+qqUser.getFigureurl_qq_1());
-                System.out.println("name"+qqUser.getNickname());
+                System.out.println("name:"+qqUser.getNickname());
                 qqUser.setId(Long.valueOf(openId));
+                System.out.println("openid:"+openId);
+                System.out.println("id:"+qqUser.getId());
                 return qqUser;
             } catch (IOException e) {
                 e.printStackTrace();

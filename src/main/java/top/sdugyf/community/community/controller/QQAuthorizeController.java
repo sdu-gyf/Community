@@ -53,7 +53,7 @@ public class QQAuthorizeController {
         String accessToken = qqProvider.getAccessToken(qqAccessTokenDTO);
         QQUser qqUser = qqProvider.getUser(accessToken);
         System.out.println(qqUser.getId());
-        if(qqUser!=null && qqUser.getId()!=null) {
+        if( qqUser!=null && qqUser.getId()!=null) {
             User user = new User();
             String token = UUID.randomUUID().toString();
             user.setToken(token);
@@ -69,7 +69,9 @@ public class QQAuthorizeController {
             userService.CreateOrUpdate(user);
             response.addCookie(new Cookie("token",token));
             return "redirect:/";
+        }else{
+            // 登录失败，重新登陆
+            return "redirect:/";
         }
-        return null;
     }
 }
