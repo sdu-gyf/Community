@@ -40,6 +40,7 @@ public class QQProvider {
                 .url("https://graph.qq.com/oauth2.0/me?access_token="+accessToken)
                 .build();
         try (Response response = client.newCall(request).execute()) {
+            System.out.println("response:"+response);
             String UserInfoString = response.body().string().split(" ")[1];
             JSONObject userInfo = JSONObject.parseObject(UserInfoString);
             String openId = (String) userInfo.get("openid");
@@ -49,7 +50,9 @@ public class QQProvider {
                     .url("https://graph.qq.com/user/get_user_info?access_token="+accessToken+"&oauth_consumer_key="+oauth_consumer_key+"&openid="+openId)
                     .build();
             try (Response newResponse = okHttpClient.newCall(newRequest).execute()) {
+                System.out.println("newResponse:"+newResponse);
                 String  data =  newResponse.body().string();
+                System.out.println("data:"+data);
                 QQUser qqUser = JSON.parseObject(data, QQUser.class);
                 qqUser.setId(Long.valueOf(openId));
                 return qqUser;
